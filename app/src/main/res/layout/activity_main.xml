@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+    <data>
+        <import type = "android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.example.checkcoin.MainActivity.ViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity = "center"
+        android:background="@color/background"
+        android:padding = "20dp"
+        tools:context=".MainActivity">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity = "center"
+            android:layout_marginBottom="5dp" >
+            <EditText
+                android:id = "@+id/selectCoin"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text = "@={viewModel.searchKeyword}"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:fontFamily="@font/binggrae"
+                android:editable="false"
+                android:layout_marginRight="5dp"/>
+            <Button
+                android:id = "@+id/getButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "새로고침"
+                android:background="@drawable/block"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:fontFamily="@font/binggrae" />
+        </LinearLayout>
+        <!--<TextView
+            android:id = "@+id/testView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!"
+            android:textColor="@color/white"
+            android:layout_marginBottom="5dp"/>-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" >
+            <androidx.viewpager.widget.ViewPager
+                android:id = "@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background = "@drawable/block"
+                android:padding = "5dp" />
+            <TextView
+                android:id = "@+id/noSelectText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text = "코인을 먼저 선택해주세요"
+                android:layout_gravity="center"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/binggrae"
+                android:textStyle="bold" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>
