@@ -136,8 +136,6 @@ class CandleStickFragment : Fragment() {
         yAxisRight.textColor = Color.WHITE
         yAxisRight.gridColor = Color.WHITE
 
-
-        //lineChart.setVisibleXRangeMinimum((60 * 60 * 24 * 1000 * 5).toFloat())
         lineChart.description = null
         lineChart.legend.textColor = Color.WHITE
         lineChart.data = lineData

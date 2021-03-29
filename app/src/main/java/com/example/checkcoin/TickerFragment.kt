@@ -47,8 +47,6 @@ class TickerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("Fragment Start")
-        //title = arguments?.getString("title").toString()
-        //println("coin >> ${title}")
     }
 
     override fun onCreateView(

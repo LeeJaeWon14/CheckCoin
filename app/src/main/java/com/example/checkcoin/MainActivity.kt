@@ -137,8 +137,6 @@ class MainActivity : AppCompatActivity() {
         viewPager.visibility = View.VISIBLE
         noSelectText.visibility = View.INVISIBLE
 
-        println("now >> ${coin}")
-
         if(viewPager.isActivated) {
             println("now >> ViewPager Activated")
             viewPager.removeAllViews()
