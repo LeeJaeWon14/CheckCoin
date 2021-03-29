@@ -2,8 +2,8 @@
   - 빗썸의 Public API를 활용한 가상화폐 정보 확인 앱
   
 # Used
-  1. Android Studio 4.2
-  ##2. Kotlin 1.3.72
+  ### 1. Android Studio 4.2
+  ### 2. Kotlin 1.3.72
     1. 빗썸 Public API (Ticker, CandleStick)
     2. Retrofit2
     3. Coroutine
