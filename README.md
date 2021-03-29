@@ -3,7 +3,7 @@
   
 # Used
   1. Android Studio 4.2
-  2. Kotlin 1.3.72
+  ##2. Kotlin 1.3.72
     1. 빗썸 Public API (Ticker, CandleStick)
     2. Retrofit2
     3. Coroutine
