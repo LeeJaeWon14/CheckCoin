@@ -33,7 +33,7 @@ class CandleStickFragment : Fragment() {
     private lateinit var act : Activity
     private lateinit var title : String
     companion object {
-        fun newInstance(page : Int, title : String, type : String = "time") : CandleStickFragment {
+        fun newInstance(page : Int, title : String) : CandleStickFragment {
             val fragment : CandleStickFragment = CandleStickFragment()
             val args : Bundle = Bundle()
             args.putInt("page", page)
