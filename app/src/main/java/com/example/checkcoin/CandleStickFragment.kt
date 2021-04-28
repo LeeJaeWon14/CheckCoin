@@ -33,6 +33,7 @@ class CandleStickFragment : Fragment() {
     private lateinit var act : Activity
     private lateinit var title : String
     companion object {
+        //Fragment Instance 생성
         fun newInstance(page : Int, title : String) : CandleStickFragment {
             val fragment : CandleStickFragment = CandleStickFragment()
             val args : Bundle = Bundle()
@@ -44,6 +45,7 @@ class CandleStickFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
+        //상위 Activity의 Context 가져옴
         super.onAttach(context)
         if(context is Activity) { act = context }
     }
@@ -66,6 +68,7 @@ class CandleStickFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        //Retrofit 초기화
         val retrofit : Retrofit = Retrofit.Builder()
             .baseUrl("https://api.bithumb.com/public/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -94,20 +97,19 @@ class CandleStickFragment : Fragment() {
         }
     }
 
+    //그래프 차트 설정
     private fun setChart(records : List<List<String>>) {
         val lineChart : LineChart = chart
         lineChart.invalidate()
         lineChart.clear()
 
         val dateList : ArrayList<Long> = ArrayList<Long>()
-
         val entries : ArrayList<Entry> = ArrayList<Entry>()
 
         for(i in records.size-1 downTo records.size-10) {
             entries.add(Entry((records.size-i).toFloat(), records.get(i).get(1).toFloat()))
             dateList.add(records.get(i).get(0).toLong())
         }
-
 
         val lineDataSet : LineDataSet = LineDataSet(entries, "Price")
         lineDataSet.setColor(resources.getColor(R.color.colorPrimary))
@@ -120,6 +122,7 @@ class CandleStickFragment : Fragment() {
         lineData.setValueTextColor(Color.WHITE)
         lineData.setValueTextSize(9f)
 
+        //X축 설정
         val xAxis : XAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.TOP
         xAxis.setLabelCount(10, true)
@@ -127,20 +130,25 @@ class CandleStickFragment : Fragment() {
         xAxis.gridColor = Color.WHITE
         xAxis.valueFormatter = AxisValueFormatter(lineChart, dateList)
 
+        //Y축 왼쪽 설정
         val yAxisLeft = lineChart.axisLeft
         yAxisLeft.setDrawLabels(false)
         yAxisLeft.setDrawAxisLine(false)
         yAxisLeft.setDrawGridLines(false)
 
+        //Y축 오른쪽 설정
         val yAxisRight = lineChart.axisRight
         yAxisRight.textColor = Color.WHITE
         yAxisRight.gridColor = Color.WHITE
 
+        //Chart 속성 설정
         lineChart.description = null
         lineChart.legend.textColor = Color.WHITE
         lineChart.data = lineData
+        lineChart.setNoDataText("wait..")
     }
 
+    //축 단위 설정하는 클래스
     inner class AxisValueFormatter(chart : LineChart, dateList : ArrayList<Long>) : ValueFormatter() {
         lateinit var chart : LineChart
         lateinit var dateList : ArrayList<Long>
