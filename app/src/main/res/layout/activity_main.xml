@@ -19,32 +19,15 @@
         <EditText
             android:id = "@+id/selectCoin"
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
+            style = "@style/basic_editText"
             android:text = "눌러서 선택"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:fontFamily="@font/binggrae"
             android:editable="false"
             android:layout_marginRight="5dp"/>
         <Button
             android:id = "@+id/getButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "새로고침"
-            android:background="@drawable/block"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:fontFamily="@font/binggrae" />
+            style = "@style/basic_button"
+            android:text = "새로고침" />
     </LinearLayout>
-    <!--<TextView
-        android:id = "@+id/testView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:textColor="@color/white"
-        android:layout_marginBottom="5dp"/>-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -57,14 +40,9 @@
             android:padding = "5dp" />
         <TextView
             android:id = "@+id/noSelectText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
+            style = "@style/basic_text"
             android:text = "코인을 먼저 선택해주세요"
             android:layout_gravity="center"
-            android:textSize="30dp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/binggrae"
-            android:textStyle="bold" />
+            android:textSize="30dp" />
     </FrameLayout>
 </LinearLayout>

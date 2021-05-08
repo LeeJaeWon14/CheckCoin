@@ -10,4 +10,31 @@
     <style name = "SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name = "android:windowBackground">@drawable/splash</item>
     </style>
+
+    <style name = "basic_text">
+        <item name = "android:fontFamily">@font/binggrae</item>
+        <item name = "android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name = "android:textStyle">bold</item>
+        <item name = "android:textAlignment">center</item>
+        <item name = "android:textColor">@color/white</item>
+    </style>
+
+    <style name = "basic_button">
+        <item name = "android:layout_width">match_parent</item>
+        <item name = "android:layout_height">wrap_content</item>
+        <item name = "android:fontFamily">@font/binggrae</item>
+        <item name = "android:textColor">@color/white</item>
+        <item name = "android:textStyle">bold</item>
+        <item name = "android:background">@drawable/block</item>
+    </style>
+
+    <style name = "basic_editText">
+        <item name = "android:layout_height">wrap_content</item>
+        <item name = "android:textAlignment">center</item>
+        <item name = "android:backgroundTint">@color/colorPrimary</item>
+        <item name = "android:textColor">@color/white</item>
+        <item name = "android:textStyle">bold</item>
+        <item name = "android:fontFamily">@font/binggrae</item>
+    </style>
 </resources>

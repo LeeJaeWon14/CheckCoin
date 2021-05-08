@@ -13,30 +13,20 @@
         <EditText
             android:id = "@+id/addCoin"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/binggrae"
-            android:textColor="@color/white"
+            style = "@style/basic_editText"
             android:hint = "주문 통화의 코드를 써주세요"
-            android:textAlignment="center"
             android:layout_gravity = "center"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:textColorHint="@color/white"/>
         <Button
             android:id = "@+id/addCoinButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "추가하기"
-            android:background="@drawable/block"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:fontFamily="@font/binggrae" />
+            style = "@style/basic_button"
+            android:text = "추가하기" />
         <TextView
             android:id = "@+id/coinList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style = "@style/basic_text"
             android:textSize="10dp"
-            android:textColor="@color/white"
             android:text = "통화 목록 보기"
-            android:textAlignment="center"
             android:layout_marginTop="10dp" />
     </LinearLayout>
 </LinearLayout>

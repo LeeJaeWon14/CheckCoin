@@ -8,12 +8,7 @@
     android:gravity = "center">
     <TextView
         android:id = "@+id/dialogMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/binggrae"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:text = "Message"
-        android:textAlignment="center" />
+        style = "@style/basic_text"
+        android:text = "Message" />
 
 </LinearLayout>
