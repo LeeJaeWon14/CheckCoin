@@ -1,5 +1,7 @@
-package com.example.checkcoin
+package com.example.checkcoin.model.service
 
+import com.example.checkcoin.model.dto.CandleStickDTO
+import com.example.checkcoin.model.dto.TickerDTO
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

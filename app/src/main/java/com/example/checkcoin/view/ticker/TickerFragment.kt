@@ -1,37 +1,43 @@
-package com.example.checkcoin
+package com.example.checkcoin.view.ticker
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.ticker_layout.*
-import kotlinx.coroutines.*
+import com.example.checkcoin.databinding.TickerLayoutBinding
+import com.example.checkcoin.model.dto.TickerDTO
+import com.example.checkcoin.model.service.CheckService
+import com.example.checkcoin.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Runnable
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class TickerFragment : Fragment() {
+    private var _binding: TickerLayoutBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var act : Activity
     private lateinit var title : String
     private lateinit var job : Job
     var result : TickerDTO? = null
+
     companion object {
         //Fragment Instance 생성
         fun newInstance(page : Int, title : String) : TickerFragment {
-            println("instance")
+            Log.e("instance")
             val fragment : TickerFragment = TickerFragment()
             val args : Bundle = Bundle()
             args.putInt("page", page)
@@ -48,7 +54,7 @@ class TickerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        println("Fragment Start")
+        Log.e("Fragment Start")
     }
 
     override fun onCreateView(
@@ -56,15 +62,15 @@ class TickerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.ticker_layout, container, false)
-        return view
+        _binding = TickerLayoutBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onStart() {
         super.onStart()
 
         title = arguments?.getString("title").toString()
-        println("coin >> ${title}")
+        Log.e("coin >> ${title}")
 
         //Retrofit 초기화
         val retrofit : Retrofit = Retrofit.Builder()
@@ -103,17 +109,19 @@ class TickerFragment : Fragment() {
         val date : Date = Date(result?.data?.date!!.toLong())
         val dateFormat : String = SimpleDateFormat("yyyy-MM-dd hh:mm", Locale.getDefault()).format(date)
 
-        tickerOpening.text = tickerOpening.text.toString() + "\r\n ${makeComma(result?.data?.openingPrice!!)}원" //시가
-        tickerClosing.text = tickerClosing.text.toString() + "\r\n ${makeComma(result?.data?.closingPrice!!)}원" //종가
-        tickerMin.text = tickerMin.text.toString() + "\r\n ${makeComma(result?.data?.minPrice!!)}원" //저가
-        tickerMax.text = tickerMax.text.toString() + "\r\n ${makeComma(result?.data?.maxPrice!!)}원" //고가
-        tickerUnitsTraded.text = tickerUnitsTraded.text.toString() + "\r\n ${makeComma(cutString(result?.data?.unitsTraded!!))}건" //거래량
-        tickerAcc_trade_value.text = tickerAcc_trade_value.text.toString() + "\r\n ${makeComma(cutString(result?.data?.accTradeValue!!))}원" //거래금액
-        tickerPrevClosing.text = tickerPrevClosing.text.toString() + "\r\n ${makeComma(result?.data?.prevClosingPrice!!)}원" //전일종가
-        tickerUnitsTraded_24H.text = tickerUnitsTraded_24H.text.toString() + "\r\n ${makeComma(cutString(result?.data?.unitsTraded_24H!!))}건" //24시간 거래량
-        tickerFluctate_24H.text = tickerFluctate_24H.text.toString() + "\r\n ${makeComma(cutString(result?.data?.fluctate_24H!!))}원" //24시간 변동가
-        tickerFluctateRate_24H.text = tickerFluctateRate_24H.text.toString() + "\r\n ${result?.data?.fluctateRate_24H}%" //24시간 변동률
-        tickerDate.text = "${dateFormat} ${tickerDate.text.toString()}" //기준 시간
+        binding.apply {
+            tickerOpening.text = tickerOpening.text.toString() + "\r\n ${makeComma(result?.data?.openingPrice!!)}원" //시가
+            tickerClosing.text = tickerClosing.text.toString() + "\r\n ${makeComma(result?.data?.closingPrice!!)}원" //종가
+            tickerMin.text = tickerMin.text.toString() + "\r\n ${makeComma(result?.data?.minPrice!!)}원" //저가
+            tickerMax.text = tickerMax.text.toString() + "\r\n ${makeComma(result?.data?.maxPrice!!)}원" //고가
+            tickerUnitsTraded.text = tickerUnitsTraded.text.toString() + "\r\n ${makeComma(cutString(result?.data?.unitsTraded!!))}건" //거래량
+            tickerAccTradeValue.text = tickerAccTradeValue.text.toString() + "\r\n ${makeComma(cutString(result?.data?.accTradeValue!!))}원" //거래금액
+            tickerPrevClosing.text = tickerPrevClosing.text.toString() + "\r\n ${makeComma(result?.data?.prevClosingPrice!!)}원" //전일종가
+            tickerUnitsTraded24H.text = tickerUnitsTraded24H.text.toString() + "\r\n ${makeComma(cutString(result?.data?.unitsTraded_24H!!))}건" //24시간 거래량
+            tickerFluctate24H.text = tickerFluctate24H.text.toString() + "\r\n ${makeComma(cutString(result?.data?.fluctate_24H!!))}원" //24시간 변동가
+            tickerFluctateRate24H.text = tickerFluctateRate24H.text.toString() + "\r\n ${result?.data?.fluctateRate_24H}%" //24시간 변동률
+            tickerDate.text = "${dateFormat} ${tickerDate.text.toString()}" //기준 시간
+        }
     }
 
     fun makeComma(price : String) : String {
@@ -126,7 +134,8 @@ class TickerFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        println("fragment destroy")
+        Log.e("fragment destroy")
+        _binding = null
         job.cancel()
     }
 }

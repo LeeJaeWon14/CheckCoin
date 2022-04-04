@@ -1,4 +1,4 @@
-package com.example.checkcoin
+package com.example.checkcoin.view.candlestick
 
 import android.app.Activity
 import android.content.Context
@@ -8,30 +8,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.checkcoin.R
+import com.example.checkcoin.databinding.CandleStickLayoutBinding
+import com.example.checkcoin.model.dto.CandleStickDTO
+import com.example.checkcoin.model.service.CheckService
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
-import kotlinx.android.synthetic.main.candle_stick_layout.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CandleStickFragment : Fragment() {
+    private var _binding: CandleStickLayoutBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var act : Activity
     private lateinit var title : String
+
     companion object {
         //Fragment Instance 생성
         fun newInstance(page : Int, title : String) : CandleStickFragment {
@@ -60,9 +66,8 @@ class CandleStickFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.candle_stick_layout, container, false)
-        val chart = view.findViewById<LineChart>(R.id.chart)
-        return view
+        _binding = CandleStickLayoutBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onStart() {
@@ -97,9 +102,14 @@ class CandleStickFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     //그래프 차트 설정
     private fun setChart(records : List<List<String>>) {
-        val lineChart : LineChart = chart
+        val lineChart : LineChart = binding.chart
         lineChart.invalidate()
         lineChart.clear()
 
@@ -112,9 +122,9 @@ class CandleStickFragment : Fragment() {
         }
 
         val lineDataSet : LineDataSet = LineDataSet(entries, "Price")
-        lineDataSet.setColor(resources.getColor(R.color.colorPrimary))
-        lineDataSet.circleHoleColor = resources.getColor(R.color.white)
-        lineDataSet.setCircleColor(resources.getColor(R.color.white))
+        lineDataSet.setColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+        lineDataSet.circleHoleColor = ContextCompat.getColor(requireContext(), R.color.white)
+        lineDataSet.setCircleColor(ContextCompat.getColor(requireContext(), R.color.white))
 
         val lineData : LineData = LineData()
         lineData.addDataSet(lineDataSet)

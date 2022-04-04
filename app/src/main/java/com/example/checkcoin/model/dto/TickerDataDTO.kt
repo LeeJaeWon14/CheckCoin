@@ -1,4 +1,4 @@
-package com.example.checkcoin
+package com.example.checkcoin.model.dto
 
 import com.google.gson.annotations.SerializedName
 
