@@ -14,6 +14,7 @@ import com.example.checkcoin.R
 import com.example.checkcoin.databinding.CandleStickLayoutBinding
 import com.example.checkcoin.model.dto.CandleStickDTO
 import com.example.checkcoin.model.service.CheckService
+import com.example.checkcoin.util.Log
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -66,6 +67,7 @@ class CandleStickFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.e("candlestick onCreateView")
         _binding = CandleStickLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -74,10 +76,11 @@ class CandleStickFragment : Fragment() {
         super.onStart()
 
         //Retrofit 초기화
-        val retrofit : Retrofit = Retrofit.Builder()
-            .baseUrl("https://api.bithumb.com/public/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        val retrofit : Retrofit = Retrofit.Builder().run {
+            baseUrl("https://api.bithumb.com/public/")
+            addConverterFactory(GsonConverterFactory.create())
+            build()
+        }
         val service : CheckService = retrofit.create(CheckService::class.java)
         val candle = service.getCandleStick(title, "krw", "1m")
 
@@ -85,17 +88,18 @@ class CandleStickFragment : Fragment() {
             candle.enqueue(object : Callback<CandleStickDTO> {
                 override fun onResponse(call: Call<CandleStickDTO>, response: Response<CandleStickDTO>) {
                     if(response.isSuccessful) {
-                        val result = response.body()!!
-
-                        setChart(result.data!!)
+                        response.body()?.let {
+                            Log.e("response is success")
+                            setChart(it.data!!)
+                        }
                     }
                     else {
-                        act.runOnUiThread(Runnable { Toast.makeText(act, "Response 실패", Toast.LENGTH_SHORT).show() })
+                        act.runOnUiThread(Runnable { Toast.makeText(act, getString(R.string.str_response_failure), Toast.LENGTH_SHORT).show() })
                     }
                 }
 
                 override fun onFailure(call: Call<CandleStickDTO>, t: Throwable) {
-                    act.runOnUiThread(Runnable { Toast.makeText(act, "통신 실패", Toast.LENGTH_SHORT).show() })
+                    act.runOnUiThread(Runnable { Toast.makeText(act, String.format(getString(R.string.str_response_failure), t.toString()), Toast.LENGTH_SHORT).show() })
                 }
 
             })

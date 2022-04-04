@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">CheckCoin</string>
 
+
+    <!-- Ticker label -->
+    <string name="str_ticker_opening">시가\n%s원</string>
+    <string name="str_ticker_min">저가\n%s원</string>
+    <string name="str_ticker_units_traded">거래량\n%s건</string>
+    <string name="str_ticker_prev_closing">전일종가\n%s원</string>
+    <string name="str_ticker_fluctate_24h">24시간 변동가\n%s원</string>
+    <string name="str_ticker_closing">종가\n%s원</string>
+    <string name="str_ticker_max">고가\n%s원</string>
+    <string name="str_ticker_acc_trade_value">거래금액\n%s원</string>
+    <string name="str_ticker_units_traded_24h">24시간 거래량\n%s건</string>
+    <string name="str_ticker_fluctate_rate_24h">24시간 변동률\n%s</string>
+    <string name="str_ticker_data">%s 기준</string>
+
+    <!-- rest message -->
+    <string name="str_response_success">response is success, %s</string>
+    <string name="str_response_null">Response 실패</string>
+    <string name="str_response_failure">Response 실패, message is %s</string>
 </resources>
