@@ -13,6 +13,8 @@ import com.example.checkcoin.R
 import com.example.checkcoin.databinding.ActivityMainBinding
 import com.example.checkcoin.util.Log
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.*
+import okhttp3.Dispatcher
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -71,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                 viewPager.removeAllViews()
             }
             viewPager.adapter = MyPagerAdapter(supportFragmentManager, coin)
+            startTimer()
         }
     }
 
@@ -149,6 +152,23 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     addDlg.show()
+                }
+            }
+        }
+    }
+
+    private fun startTimer() {
+        var count = 0
+        CoroutineScope(Dispatchers.Default).launch {
+            while(true) {
+                delay(1000)
+                count ++
+                Log.e("count tik-tok! $count")
+                if(count == 10) {
+                    withContext(Dispatchers.Main) {
+                        binding.getButton.performClick()
+                    }
+                    break
                 }
             }
         }
